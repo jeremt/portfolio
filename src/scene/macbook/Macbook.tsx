@@ -46,9 +46,9 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
     useCursor(hovered);
     return (
         <group
-            name="macBook"
             ref={group}
             {...props}
+            name="macBook"
             dispose={null}
             onPointerOver={e => (e.stopPropagation(), hover(true))}
             onPointerOut={() => hover(false)}

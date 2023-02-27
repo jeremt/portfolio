@@ -10,7 +10,8 @@ interface ResumeProps {
 }
 
 export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
-    const map = useLoader(THREE.TextureLoader, '/assets/images/resume.jpg');
+    // const map = useLoader(THREE.TextureLoader, '/assets/images/resume.jpg');
+    const map = useTexture('/assets/images/resume.jpg');
     // const {renderer} = useThree();
     // map.magFilter = THREE.LinearFilter;
     // map.minFilter = THREE.LinearFilter;
@@ -48,3 +49,5 @@ export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
         </Plane>
     );
 };
+
+useTexture.preload('/assets/images/resume.jpg');

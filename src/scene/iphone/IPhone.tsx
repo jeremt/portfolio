@@ -8,7 +8,7 @@ title: iPhone 13 Pro Concept
 import * as THREE from 'three';
 import {useCursor, useGLTF} from '@react-three/drei';
 import {GLTF} from 'three-stdlib';
-import {FC, useState} from 'react';
+import {FC, useRef, useState} from 'react';
 import {useThree} from '@react-three/fiber';
 
 type GLTFResult = GLTF & {
@@ -72,22 +72,26 @@ type GLTFResult = GLTF & {
 };
 
 export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vector3, q: THREE.Quaternion) => void}> = props => {
+    const ref = useRef<THREE.Group>(null);
     const {nodes, materials} = useGLTF('/assets/models/iphone.glb') as GLTFResult;
     const [hovered, hover] = useState(false);
     const {camera} = useThree();
     useCursor(hovered);
     return (
         <group
-            name="iPhone"
+            ref={ref}
             {...props}
+            name="iPhone"
+            position={[-7, 0, 7]}
+            rotation={[0, -2.8, 0]}
+            scale={0.65}
             onPointerOver={e => (e.stopPropagation(), hover(true))}
             onPointerOut={() => hover(false)}
             onClick={e => {
                 const oldPos = camera.position.clone();
                 const oldQuat = camera.quaternion.clone();
-                console.log(e.object);
-                camera.position.copy(e.object.position.clone().setY(6));
-                camera.lookAt(e.object.position);
+                camera.position.copy(ref.current.position.clone().setY(6));
+                camera.lookAt(ref.current.position);
 
                 props.onFocus(camera.position, camera.quaternion);
 
@@ -96,7 +100,7 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
             }}
             dispose={null}
         >
-            <group position={[-7, 0, 7]} rotation={[0, -2.8, 0]} scale={0.65}>
+            <group>
                 <mesh castShadow receiveShadow geometry={nodes.BackCover_Blue_0.geometry} material={materials.Blue} />
                 <mesh castShadow receiveShadow geometry={nodes.Screen_Screen_0.geometry} material={materials.Screen} />
                 <mesh castShadow receiveShadow geometry={nodes.CameraModuleBlack_BlackGlossy_0.geometry} material={materials.BlackGlossy} />

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import {MathUtils} from 'three';
-import {Suspense, useRef} from 'react';
-import {Canvas, useFrame} from '@react-three/fiber';
-import {ContactShadows, Environment, OrbitControls, Plane, useTexture} from '@react-three/drei';
+import {Suspense} from 'react';
+import {Canvas} from '@react-three/fiber';
+import {ContactShadows, Environment, OrbitControls} from '@react-three/drei';
 import * as THREE from 'three';
 import {Div} from '../ui/Div';
 import {Room} from './Room';
