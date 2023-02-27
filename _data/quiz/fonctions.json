@@ -1,0 +1,45 @@
+{
+    "title": "Les fonctions",
+    "questions": [
+        {
+            "question": "Laquelle des syntaxes ci-dessous n'est pas valide ?",
+            "answers": [
+                "() => { console.log('coucou'); }",
+                "(message) => { console.log(message); }",
+                "message => { console.log(message); }",
+                "(message) { console.log(message); }"
+            ],
+            "solution": 3
+        },
+        {
+            "question": "Est-il possible d'avoir plusieurs fois `return` dans une même fonction ? ",
+            "answers": ["Non, cela déclenche une erreur", "Oui, on peut retourner des choses différentes selon le code"],
+            "solution": 1
+        },
+        {
+            "question": "Que signifie TDD?",
+            "answers": ["Type Deterministic Data", "Task Driven Development", "Test Driven Development", "Time Date Distance"],
+            "solution": 2
+        },
+        {
+            "question": "Combien de paramètres peut prendre une fonction ?",
+            "answers": ["Entre 1 et autant qu'on veut", "Entre 0 et autant qu'on veut", "Entre 1 et 4", "Entre 0 et 5"],
+            "solution": 1
+        },
+        {
+            "question": "Combien de fois peut on appeler une fonction ?",
+            "answers": ["Une fois", "Zéro fois", "Autant de fois qu'on veut", "Un nombre précis qu'on determine à la création"],
+            "solution": 2
+        },
+        {
+            "question": "Qu'est ce que ne permet pas de faire une fonction ?",
+            "answers": ["Améliorer la lisibilité du code", "Coder plus vite", "Améliorer les performances"],
+            "solution": 2
+        },
+        {
+            "question": "Quelle fonction permet d'écrire des tests ?",
+            "answers": ["test", "console.assert", "console.log"],
+            "solution": 1
+        }
+    ]
+}

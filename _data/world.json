@@ -1,0 +1,38 @@
+{
+    "areas": [
+        {
+            "type": "area",
+            "name": "Les bases",
+            "nodes": [
+                {"type": "guide", "slug": "guides/introduction", "index": 0},
+                {"type": "quiz", "slug": "quiz/introduction", "index": 1},
+                {"type": "exercise", "slug": "exercises/introduction", "index": 2}
+            ]
+        },
+        {
+            "type": "area",
+            "name": "Les variables",
+            "nodes": [
+                {"type": "guide", "slug": "guides/les-variables", "index": 3},
+                {"type": "quiz", "slug": "quiz/variables", "index": 4},
+                {"type": "exercise", "slug": "exercises/debug-1", "index": 5},
+                {"type": "exercise", "slug": "exercises/debug-2", "index": 6},
+                {"type": "exercise", "slug": "exercises/not-angry", "index": 7}
+            ]
+        },
+        {
+            "type": "area",
+            "name": "Les fonctions",
+            "nodes": [
+                {"type": "guide", "slug": "guides/les-fonctions", "index": 8},
+                {"type": "quiz", "slug": "quiz/fonctions", "index": 9},
+                {"type": "exercise", "slug": "exercises/apple-allergy", "index": 10}
+            ]
+        },
+        {
+            "type": "area",
+            "name": "En construction...",
+            "nodes": []
+        }
+    ]
+}

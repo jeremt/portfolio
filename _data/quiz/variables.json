@@ -1,0 +1,43 @@
+{
+    "title": "Les variables",
+    "questions": [
+        {
+            "question": "Quels sont les éléments indispensables pour représenter une variable ?",
+            "answers": ["son nom et sa valeur", "son nom, son type et sa valeur", "son nom et ses paramètres", "son prix et sa couleur"],
+            "solution": 0
+        },
+        {
+            "question": "Est-ce qu'une variable peut changer de type ?",
+            "answers": [
+                "Oui mais que certains types",
+                "Oui, dès qu'on l'assigne à une nouvelle valeur",
+                "Non jamais, une fois son type choisi il ne change plus"
+            ],
+            "solution": 1,
+            "explanations": "Javascript est un langage permissive, si on assigne une variable à une nouvelle valeur son type change toujours."
+        },
+        {
+            "question": "Pour une variable qui calcule la somme du prix des articles sélectionnés sur un site, quel nom est le plus adapté ?",
+            "answers": ["t", "prixFinal", "totalPrice", "sumOfAllSelectedArticles", "final_price"],
+            "solution": 2,
+            "explanations": "Si possible on choisi toujours un nom court, en anglais et en camelcase 😉"
+        },
+        {
+            "question": "Quel sera le résultat du calcul suivant: 2 * 3 + '10'",
+            "answers": ["16", "610", "26", "'16'", "'610'"],
+            "solution": 4,
+            "explanations": "2 * 3 = 6 et 6 + '10' devient 610 car c'est une concatenation de strings"
+        },
+        {
+            "question": "Comment est-ce que je peux remplacer 'chats' par 'chiens' dans la string let msg = \"J'aime les chats\"; ?",
+            "answers": ["msg -= 'chiens'; msg += 'chats';", "msg.replace('chats', 'chiens')", "msg = msg.replace('chats', 'chiens')", "msg[11] = 'chiens';"],
+            "solution": 2,
+            "explanations": "Javascript permet de faire beaucoup de choses mais sa principale limitation est dans les usages avec un gros besoin de performances. Dans ces cas là on choisira plutôt un language comme le C ou le C++ par exemple."
+        },
+        {
+            "question": "Laquelle de ses réponses n'est pas un type javascript ?",
+            "answers": ["number", "undefined", "text", "object"],
+            "solution": 2
+        }
+    ]
+}

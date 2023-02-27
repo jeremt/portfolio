@@ -1,0 +1,1 @@
+jsJourneyTest(jsConsoleOutput === 'JE SUIS PAS ÉNERVÉ OK ?!\n', 'Le texte ne correspond pas');

@@ -1,0 +1,38 @@
+{
+    "folders": [
+        {
+            "path": "../"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            ".github": true,
+            "node_modules": true,
+            ".eslintcache": true,
+            "src/**/*.test.ts": false,
+            "src/**/*.test.tsx": false
+        },
+        // Editor
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": true,
+        "editor.detectIndentation": false,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "editor.snippetSuggestions": "bottom",
+        "emmet.showSuggestionsAsSnippets": true,
+        // Eslint
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        "eslint.workingDirectories": ["src"],
+        // Explorer
+        "explorer.compactFolders": false,
+        // Javascript
+        "javascript.suggestionActions.enabled": false,
+        // Typescript
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "testing.automaticallyOpenPeekView": "never",
+        "typescript.preferences.useAliasesForRenames": false,
+        "typescript.tsserver.experimental.enableProjectDiagnostics": true
+    }
+}

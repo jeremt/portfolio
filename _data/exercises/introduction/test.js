@@ -1,0 +1,1 @@
+jsJourneyTest(jsConsoleOutput === 'Bonjour tout le monde !\nCeci est mon premier code Javascript :)\n', 'Le texte ne correspond pas');

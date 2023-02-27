@@ -1,0 +1,38 @@
+{
+    "title": "Introduction",
+    "questions": [
+        {
+            "question": "À quoi sert principalement Javascript ?",
+            "answers": ["Décrire la structure d'un site web", "Définir l'apparence du site (couleurs, tailles, etc.)", "Rendre le site dynamique"],
+            "solution": 2
+        },
+        {
+            "question": "Javascript est-il nécéssaire pour qu'un site fonctionne correctement ?",
+            "answers": ["Oui, absolument !", "Non, pas forcément 😉"],
+            "solution": 1,
+            "explanations": "Seul le HTML est nécéssaire, le CSS permet de le rendre plus joli, et le Javscript de le rendre dynamique !"
+        },
+        {
+            "question": "Comment fait-on pour afficher un message de debug en Javascript ?",
+            "answers": ["On utilise la fonction debug()", "On utilise la fonction console.log()", "Ce n'est pas possible", "On utilise le HTML"],
+            "solution": 1
+        },
+        {
+            "question": "Dans quel cas on ne peut pas d'utiliser Javascript ?",
+            "answers": [
+                "📱 Créer des applications mobiles",
+                "👯 Faire le back-end d'un réseau social",
+                "🎮 Faire un jeu comme GTA pour PS5 & XBox",
+                "🤖 Piloter un robot avec un contrôleur Arduino"
+            ],
+            "solution": 2,
+            "explanations": "Javascript permet de faire beaucoup de choses mais sa principale limitation est dans les usages avec un gros besoin de performances. Dans ces cas là on choisira plutôt un language comme le C ou le C++ par exemple."
+        },
+        {
+            "question": "Quel est le meilleur site pour comprendre une fonctionnalité précise de JS ?",
+            "answers": ["Google", "Wikipedia", "Asos", "W3School ou MDN"],
+            "solution": 3,
+            "explanations": "Javascript permet de faire beaucoup de choses mais sa principale limitation est dans les usages avec un gros besoin de performances. Dans ces cas là on choisira plutôt un language comme le C ou le C++ par exemple."
+        }
+    ]
+}
