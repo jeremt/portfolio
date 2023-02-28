@@ -18,87 +18,87 @@ interface CameraTarget {
 }
 
 export const Room: FC = () => {
-    const ref = useRef(null);
+    const roomRef = useRef<THREE.Group>(null);
+    const macbookRef = useRef<THREE.Group>(null);
+    const iphoneRef = useRef<THREE.Group>(null);
+    const resumeRef = useRef<THREE.Group>(null);
     const {camera} = useThree();
-    const target: CameraTarget = {
+    const targetRef = useRef<CameraTarget>({
         position: camera.position.clone(),
         positionRatio: 0,
         quaternion: camera.quaternion.clone(),
         quaternionRatio: 0,
-    };
-
-    const resetCamera = useCallback(() => {
-        const oldPos = camera.position.clone();
-        const oldQuat = camera.quaternion.clone();
-
-        camera.position.set(0, 20, 50);
-        camera.lookAt(0, 0, 0);
-
-        target.position.copy(camera.position);
-        target.positionRatio = 0.6;
-        target.quaternion.copy(camera.quaternion);
-        target.quaternionRatio = 0.4;
-
-        camera.position.copy(oldPos);
-        camera.quaternion.copy(oldQuat);
-        location.hash = '';
-    }, []);
+    });
 
     useEffect(() => {
-        window.addEventListener('hashchange', e => {
+        const applyFocus = () => {
+            const oldPos = camera.position.clone();
+            const oldQuat = camera.quaternion.clone();
+            switch (location.hash) {
+                case '':
+                    camera.position.set(0, 20, 50);
+                    camera.lookAt(0, 0, 0);
+                    targetRef.current.position.copy(camera.position);
+                    targetRef.current.positionRatio = 0.6;
+                    targetRef.current.quaternion.copy(camera.quaternion);
+                    targetRef.current.quaternionRatio = 0.4;
+
+                    camera.position.copy(oldPos);
+                    camera.quaternion.copy(oldQuat);
+                    return;
+                case '#projects':
+                    camera.position.copy(macbookRef.current.position.clone().setZ(10).setY(8));
+                    camera.rotation.copy(macbookRef.current.rotation);
+                    camera.lookAt(macbookRef.current.position.clone().setY(2));
+                    break;
+                case '#resume':
+                    camera.position.copy(resumeRef.current.position.clone().setY(6));
+                    camera.lookAt(resumeRef.current.position);
+                    break;
+                case '#contact':
+                    camera.position.copy(iphoneRef.current.position.clone().setY(6));
+                    camera.lookAt(iphoneRef.current.position);
+                    break;
+            }
+
+            targetRef.current.position.copy(camera.position);
+            targetRef.current.positionRatio = 0.4;
+            targetRef.current.quaternion.copy(camera.quaternion);
+            targetRef.current.quaternionRatio = 0.6;
+
+            camera.position.copy(oldPos);
+            camera.quaternion.copy(oldQuat);
             // setHash(location.hash);
-        });
+        };
+        window.addEventListener('hashchange', applyFocus);
+        applyFocus();
+        return () => window.removeEventListener('hashchange', applyFocus);
     }, []);
 
     useFrame((state, dt) => {
-        easing.damp3(state.camera.position, target.position, target.positionRatio, dt);
-        easing.dampQ(state.camera.quaternion, target.quaternion, target.quaternionRatio, dt);
+        easing.damp3(state.camera.position, targetRef.current.position, targetRef.current.positionRatio, dt);
+        easing.dampQ(state.camera.quaternion, targetRef.current.quaternion, targetRef.current.quaternionRatio, dt);
     });
     return (
-        <group ref={ref}>
+        <group ref={roomRef}>
             <Suspense fallback={null}>
                 <Center position-y={15}>
                     <Text3D font="/assets/fonts/oswald_bold.json" scale={2}>
                         HI, I'M JÉRÉMIE!
                         <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.5} />
-                        {/* <MeshTransmissionMaterial reflectivity={0.5} {...config} background={texture} /> */}
                     </Text3D>
                 </Center>
                 <Center position-y={12}>
                     <Text3D font="/assets/fonts/oswald_regular.json" scale={1.2}>
                         (CLICK ANYWHERE TO EXPLORE)
                         <meshStandardMaterial color="#777777" metalness={0.5} roughness={0.5} />
-                        {/* <MeshTransmissionMaterial reflectivity={0.5} {...config} background={texture} /> */}
                     </Text3D>
                 </Center>
             </Suspense>
             <Lamp />
-            <IPhone
-                onFocus={(p, q) => {
-                    target.position.copy(p);
-                    target.positionRatio = 0.4;
-                    target.quaternion.copy(q);
-                    target.quaternionRatio = 0.6;
-                }}
-            />
-            <Macbook
-                onFocus={(p, q) => {
-                    target.position.copy(p);
-                    target.positionRatio = 0.4;
-                    target.quaternion.copy(q);
-                    target.quaternionRatio = 0.6;
-                }}
-                onBlur={resetCamera}
-            />
-            <Resume
-                onFocus={(p, q) => {
-                    target.position.copy(p);
-                    target.positionRatio = 0.4;
-                    target.quaternion.copy(q);
-                    target.quaternionRatio = 0.6;
-                }}
-                onBlur={resetCamera}
-            />
+            <IPhone ref={iphoneRef} />
+            <Macbook ref={macbookRef} />
+            <Resume ref={resumeRef} />
             <Desk />
         </group>
     );

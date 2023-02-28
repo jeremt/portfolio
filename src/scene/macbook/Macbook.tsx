@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {useCallback, useEffect, useRef, useState} from 'react';
-import {useCursor, useGLTF} from '@react-three/drei';
+import {forwardRef, useCallback, useEffect, useRef, useState} from 'react';
+import {Center, Text3D, useCursor, useGLTF} from '@react-three/drei';
 import {useFrame, useThree} from '@react-three/fiber';
 import type {FC} from 'react';
 import type {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
@@ -33,40 +33,20 @@ type GLTFResult = GLTF & {
     };
 };
 
-export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props => {
-    const {onFocus, onBlur} = props;
-    const group = useRef(null);
-    const {camera} = useThree();
+export const Macbook = forwardRef<THREE.Group>((props, ref) => {
     const {nodes, materials} = useGLTF('/assets/models/macbook.glb') as GLTFResult;
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
 
     useEffect(() => {
-        const applyFocus = () => {
-            if (location.hash !== '#projects') {
-                return;
-            }
-            const oldPos = camera.position.clone();
-            const oldQuat = camera.quaternion.clone();
-
-            camera.position.copy(group.current.position.clone().setZ(10).setY(8));
-            camera.rotation.copy(group.current.rotation);
-            camera.lookAt(group.current.position.clone().setY(2));
-            onFocus(camera.position, camera.quaternion);
-
-            camera.position.copy(oldPos);
-            camera.quaternion.copy(oldQuat);
+        if (location.hash === '#projects') {
             focus(true);
-        };
-        window.addEventListener('hashchange', applyFocus);
-        applyFocus();
-        return () => window.removeEventListener('hashchange', applyFocus);
+        }
     }, []);
-
     useCursor(hovered);
     return (
         <group
-            ref={group}
+            ref={ref}
             {...props}
             name="macBook"
             dispose={null}
@@ -74,12 +54,18 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
             onPointerOut={() => hover(false)}
             onClick={e => {
                 location.hash = '#projects';
+                focus(true);
             }}
             onPointerMissed={e => {
-                onBlur();
+                location.hash = '';
                 focus(false);
             }}
         >
+            <Center position-y={8}>
+                <Text3D visible={hovered && !focused} scale={1.2} font="/assets/fonts/oswald_regular.json">
+                    PROJECTS
+                </Text3D>
+            </Center>
             <group rotation-x={-0.425} position={[0, -0.04, 0.41]}>
                 <group position={[0, 2.96, -0.13]} rotation={[Math.PI / 2, 0, 0]}>
                     <mesh castShadow material={materials.aluminium} geometry={nodes['Cube008'].geometry} />
@@ -100,4 +86,4 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
             <mesh material={materials.touchbar} geometry={nodes.touchbar.geometry} position={[0, -0.03, 1.2]} />
         </group>
     );
-};
+});

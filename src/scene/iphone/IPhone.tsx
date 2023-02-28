@@ -6,9 +6,9 @@ source: https://sketchfab.com/3d-models/iphone-13-pro-concept-43bddf623d24406aae
 title: iPhone 13 Pro Concept
 */
 import * as THREE from 'three';
-import {Html, useCursor, useGLTF} from '@react-three/drei';
+import {Center, Html, Text, Text3D, useCursor, useGLTF} from '@react-three/drei';
 import {GLTF} from 'three-stdlib';
-import {FC, useCallback, useEffect, useRef, useState} from 'react';
+import {FC, forwardRef, useCallback, useEffect, useRef, useState} from 'react';
 import {useThree} from '@react-three/fiber';
 import {IphoneScreen} from './IphoneScreen';
 
@@ -72,33 +72,17 @@ type GLTFResult = GLTF & {
     };
 };
 
-export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vector3, q: THREE.Quaternion) => void}> = props => {
-    const ref = useRef<THREE.Group>(null);
+export const IPhone = forwardRef<THREE.Group>((props, ref) => {
     const {nodes, materials} = useGLTF('/assets/models/iphone.glb') as GLTFResult;
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
-    const {camera} = useThree();
-    useCursor(hovered);
+
     useEffect(() => {
-        const applyFocus = () => {
-            if (location.hash !== '#contact') {
-                return;
-            }
-            const oldPos = camera.position.clone();
-            const oldQuat = camera.quaternion.clone();
-            camera.position.copy(ref.current.position.clone().setY(6));
-            camera.lookAt(ref.current.position);
-
-            props.onFocus(camera.position, camera.quaternion);
-
-            camera.position.copy(oldPos);
-            camera.quaternion.copy(oldQuat);
+        if (location.hash === '#contact') {
             focus(true);
-        };
-        window.addEventListener('hashchange', applyFocus);
-        applyFocus();
-        return () => window.removeEventListener('hashchange', applyFocus);
+        }
     }, []);
+    useCursor(hovered);
     return (
         <group
             ref={ref}
@@ -111,10 +95,21 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
             onPointerOut={() => hover(false)}
             onClick={() => {
                 location.hash = '#contact';
+                focus(true);
             }}
-            onPointerMissed={() => focus(false)}
+            onPointerMissed={() => {
+                location.hash = '';
+                focus(false);
+            }}
             dispose={null}
         >
+            {hovered && !focused && (
+                <Center position-y={4}>
+                    <Text3D rotation-y={Math.PI} scale={1.5} font="/assets/fonts/oswald_regular.json">
+                        CONTACT
+                    </Text3D>
+                </Center>
+            )}
             <group>
                 <mesh castShadow receiveShadow geometry={nodes.BackCover_Blue_0.geometry} material={materials.Blue} />
                 <mesh castShadow receiveShadow geometry={nodes.Screen_Screen_0.geometry} material={materials.Screen} />
@@ -156,6 +151,6 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
             </group>
         </group>
     );
-};
+});
 
 useGLTF.preload('/assets/models/iphone.glb');
