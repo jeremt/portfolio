@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {useFrame, useThree} from '@react-three/fiber';
 import {easing} from 'maath';
-import {FC, Suspense, useCallback, useRef} from 'react';
+import {FC, Suspense, useCallback, useEffect, useRef} from 'react';
 
 import {Desk} from './Desk';
 import {Lamp} from './Lamp';
@@ -44,6 +44,12 @@ export const Room: FC = () => {
         location.hash = '';
     }, []);
 
+    useEffect(() => {
+        window.addEventListener('hashchange', e => {
+            // setHash(location.hash);
+        });
+    }, []);
+
     useFrame((state, dt) => {
         easing.damp3(state.camera.position, target.position, target.positionRatio, dt);
         easing.dampQ(state.camera.quaternion, target.quaternion, target.quaternionRatio, dt);
@@ -61,7 +67,7 @@ export const Room: FC = () => {
                 <Center position-y={12}>
                     <Text3D font="/assets/fonts/oswald_regular.json" scale={1.2}>
                         (CLICK ANYWHERE TO EXPLORE)
-                        <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.5} />
+                        <meshStandardMaterial color="#777777" metalness={0.5} roughness={0.5} />
                         {/* <MeshTransmissionMaterial reflectivity={0.5} {...config} background={texture} /> */}
                     </Text3D>
                 </Center>

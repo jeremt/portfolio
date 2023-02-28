@@ -1,7 +1,7 @@
-import {Html, Plane, useCursor, useTexture} from '@react-three/drei';
-import {useLoader, useThree} from '@react-three/fiber';
+import {Html, Plane, useCursor} from '@react-three/drei';
+import {useThree} from '@react-three/fiber';
 import Image from 'next/image';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import type {FC} from 'react';
 import * as THREE from 'three';
 import styled from '@emotion/styled';
@@ -37,7 +37,7 @@ export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
             }
             const oldPos = camera.position.clone();
             const oldQuat = camera.quaternion.clone();
-            camera.position.copy(ref.current.position.clone().setY(7.5));
+            camera.position.copy(ref.current.position.clone().setY(6));
             camera.lookAt(ref.current.position);
             onFocus(camera.position, camera.quaternion);
             focus(true);
