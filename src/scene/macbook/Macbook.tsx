@@ -71,7 +71,7 @@ export const Macbook = forwardRef<THREE.Group>((props, ref) => {
                     <mesh castShadow material={materials.aluminium} geometry={nodes['Cube008'].geometry} />
                     <mesh castShadow material={materials['matte.001']} geometry={nodes['Cube008_1'].geometry} />
                     <mesh castShadow geometry={nodes['Cube008_2'].geometry}>
-                        <meshStandardMaterial color="#333333" metalness={0.8} roughness={0} />
+                        <meshStandardMaterial color="#222222" metalness={0.8} roughness={0.1} />
                         <Html rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
                             {focused && <MacbookScreen />}
                         </Html>

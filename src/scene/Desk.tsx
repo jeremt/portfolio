@@ -8,16 +8,16 @@ export const Desk: FC = () => {
                 <meshStandardMaterial color={'#2d2d30'} metalness={0.4} roughness={0.2} />
             </Box>
             <Cylinder castShadow position={[-13, -7.6, 0]} args={[0.5, 0.5, 15]}>
-                <meshStandardMaterial color="#aaaaaa" metalness={0.8} roughness={0} />
+                <meshStandardMaterial color="#aaaaaa" metalness={1} roughness={0} />
             </Cylinder>
             <Cylinder castShadow position={[13, -7.6, 0]} args={[0.5, 0.5, 15]}>
-                <meshStandardMaterial color="#aaaaaa" metalness={0.8} roughness={0} />
+                <meshStandardMaterial color="#aaaaaa" metalness={1} roughness={0} />
             </Cylinder>
             <Cylinder castShadow position={[-13, -7.6, 8]} args={[0.5, 0.5, 15]}>
-                <meshStandardMaterial color="#aaaaaa" metalness={0.8} roughness={0} />
+                <meshStandardMaterial color="#aaaaaa" metalness={1} roughness={0} />
             </Cylinder>
             <Cylinder castShadow position={[13, -7.6, 8]} args={[0.5, 0.5, 15]}>
-                <meshStandardMaterial color="#aaaaaa" metalness={0.8} roughness={0} />
+                <meshStandardMaterial color="#aaaaaa" metalness={1} roughness={0} />
             </Cylinder>
         </group>
     );

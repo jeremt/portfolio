@@ -85,7 +85,7 @@ export const Room: FC = () => {
                 <Center position-y={15}>
                     <Text3D font="/assets/fonts/oswald_bold.json" scale={2}>
                         HI, I'M JÉRÉMIE!
-                        <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.5} />
+                        <meshStandardMaterial color="#eeeeee" metalness={0.8} roughness={0.5} />
                     </Text3D>
                 </Center>
                 <Center position-y={12}>
