@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 import {useFrame, useThree} from '@react-three/fiber';
 import {easing} from 'maath';
-import {FC, useCallback, useRef} from 'react';
+import {FC, Suspense, useCallback, useRef} from 'react';
 
 import {Desk} from './Desk';
 import {Lamp} from './Lamp';
 import {Resume} from './Resume';
 import {Macbook} from './macbook/Macbook';
 import {IPhone} from './iphone/IPhone';
+import {Center, Float, Text3D} from '@react-three/drei';
 
 interface CameraTarget {
     position: THREE.Vector3;
@@ -44,15 +45,27 @@ export const Room: FC = () => {
     }, []);
 
     useFrame((state, dt) => {
-        // if (state.camera.position === target.position) {
-        // easing.damp3(state.camera.position, [-1 + (state.pointer.x * state.viewport.width) / 3, (1 + state.pointer.y) / 2, 5.5], 0.5, dt);
-        // } else {
         easing.damp3(state.camera.position, target.position, target.positionRatio, dt);
         easing.dampQ(state.camera.quaternion, target.quaternion, target.quaternionRatio, dt);
-        // }
     });
     return (
         <group ref={ref}>
+            <Suspense fallback={null}>
+                <Center position-y={15}>
+                    <Text3D font="/assets/fonts/oswald_bold.json" scale={2}>
+                        HI, I'M JÉRÉMIE!
+                        <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.5} />
+                        {/* <MeshTransmissionMaterial reflectivity={0.5} {...config} background={texture} /> */}
+                    </Text3D>
+                </Center>
+                <Center position-y={12}>
+                    <Text3D font="/assets/fonts/oswald_regular.json" scale={1.2}>
+                        (CLICK ANYWHERE TO EXPLORE)
+                        <meshStandardMaterial color="#ffffff" metalness={0.5} roughness={0.5} />
+                        {/* <MeshTransmissionMaterial reflectivity={0.5} {...config} background={texture} /> */}
+                    </Text3D>
+                </Center>
+            </Suspense>
             <Lamp />
             <IPhone
                 onFocus={(p, q) => {
@@ -60,7 +73,6 @@ export const Room: FC = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
-                    location.hash = 'contact';
                 }}
             />
             <Macbook
@@ -69,7 +81,6 @@ export const Room: FC = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
-                    location.hash = 'projects';
                 }}
                 onBlur={resetCamera}
             />
@@ -79,7 +90,6 @@ export const Room: FC = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
-                    location.hash = 'resume';
                 }}
                 onBlur={resetCamera}
             />

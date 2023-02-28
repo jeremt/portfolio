@@ -26,34 +26,27 @@ const AppearImage = styled(Image)`
 
 export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
     const ref = useRef(null);
-    const map = useLoader(THREE.TextureLoader, '/assets/images/resume.jpg');
-    // const map = useTexture('/assets/images/resume.jpg');
-    // const {renderer} = useThree();
-    // map.magFilter = THREE.LinearFilter;
-    // map.minFilter = THREE.LinearFilter;
-    // map.minFilter = THREE.NearestFilter;
-    // map.minFilter = THREE.NearestMipmapNearestFilter;
-    // map.anisotropy = 16;
-    // map.generateMipmaps = false;
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
     const {camera} = useThree();
-    const applyFocus = useCallback(() => {
-        const oldPos = camera.position.clone();
-        const oldQuat = camera.quaternion.clone();
-        camera.position.copy(ref.current.position.clone().setY(7));
-        camera.lookAt(ref.current.position);
-        onFocus(camera.position, camera.quaternion);
-        focus(true);
-        camera.position.copy(oldPos);
-        camera.quaternion.copy(oldQuat);
-    }, []);
-
     useCursor(hovered);
     useEffect(() => {
-        if (location.hash === '#resume') {
-            applyFocus();
-        }
+        const applyFocus = () => {
+            if (location.hash !== '#resume') {
+                return;
+            }
+            const oldPos = camera.position.clone();
+            const oldQuat = camera.quaternion.clone();
+            camera.position.copy(ref.current.position.clone().setY(7.5));
+            camera.lookAt(ref.current.position);
+            onFocus(camera.position, camera.quaternion);
+            focus(true);
+            camera.position.copy(oldPos);
+            camera.quaternion.copy(oldQuat);
+        };
+        window.addEventListener('hashchange', applyFocus);
+        applyFocus();
+        return () => window.removeEventListener('hashchange', applyFocus);
     }, []);
     return (
         <Plane
@@ -63,7 +56,9 @@ export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
             scale={0.003}
             position={[8, 0, 6]}
             rotation={[-Math.PI / 2, 0, -0.1]}
-            onClick={applyFocus}
+            onClick={() => {
+                location.hash = '#resume';
+            }}
             onPointerMissed={() => {
                 focus(false);
                 onBlur();
@@ -74,7 +69,7 @@ export const Resume: FC<ResumeProps> = ({onFocus, onBlur}) => {
             <Html transform position={[0, 0, 0]} scale={80}>
                 {focused && <AppearImage src="/assets/images/resume.jpg" priority alt="Resume" width={595} height={842} />}
             </Html>
-            {/* <meshStandardMaterial map={map} /> */}
+            <meshStandardMaterial />
         </Plane>
     );
 };

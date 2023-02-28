@@ -3,10 +3,10 @@ import {Suspense, useEffect, useState} from 'react';
 import {Canvas} from '@react-three/fiber';
 import {ContactShadows, Environment, OrbitControls} from '@react-three/drei';
 import * as THREE from 'three';
-import {Div} from '../ui/Div';
+import {Box} from '../ui/Box';
 import {Room} from './Room';
 
-const Header = styled(Div)`
+const Header = styled(Box)`
     position: absolute;
     z-index: 1;
     color: #eeeeee;

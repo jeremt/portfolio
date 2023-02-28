@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import {Div} from '../../ui/Div';
+import {Box} from '../../ui/Box';
 import {FC, useCallback, useMemo, useState} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ const appear = keyframes`
     }
 `;
 
-const Background = styled(Div)`
+const Background = styled(Box)`
     animation: ${appear} 0.3s;
     width: 334px;
     height: 216px;
@@ -22,7 +22,7 @@ const Background = styled(Div)`
     background-size: cover;
 `;
 
-const WindowWrapper = styled(Div)`
+const WindowWrapper = styled(Box)`
     width: 280px;
     height: 150px;
     position: absolute;
@@ -80,7 +80,7 @@ const WindowWrapper = styled(Div)`
     }
 `;
 
-const LeftPanel = styled(Div)`
+const LeftPanel = styled(Box)`
     border-right: 1px solid #241e24;
     .preview {
         margin-top: 5px;
@@ -143,12 +143,12 @@ export const MacbookScreen: FC = () => {
                     <div className="button yellow"></div>
                     <div className="button green"></div>
                 </div>
-                <Div className="content">
+                <Box className="content">
                     <LeftPanel width="60%" direction="y">
-                        <Div width="100%" align="center" distribute="center">
+                        <Box width="100%" align="center" distribute="center">
                             <img className="preview" src={projects[selectedProject].image} alt={projects[selectedProject].name} />
-                        </Div>
-                        <Div padding="5px 10px" align="center" spacing="5px">
+                        </Box>
+                        <Box padding="5px 10px" align="center" spacing="5px">
                             {projects.map((project, i) => (
                                 <Icon
                                     key={project.name}
@@ -163,20 +163,20 @@ export const MacbookScreen: FC = () => {
                                     height={288}
                                 />
                             ))}
-                        </Div>
+                        </Box>
                     </LeftPanel>
-                    <Div width="40%" direction="y" padding="5px" spacing="5px">
-                        <Div>
-                            <Div style={{fontSize: '0.5rem'}}>{projects[selectedProject].name}</Div>
-                        </Div>
-                        <Div width="100%" style={{color: '#aaaaaa'}}>
+                    <Box width="40%" direction="y" padding="5px" spacing="5px">
+                        <Box>
+                            <Box style={{fontSize: '0.5rem'}}>{projects[selectedProject].name}</Box>
+                        </Box>
+                        <Box width="100%" style={{color: '#aaaaaa'}}>
                             {projects[selectedProject].description}
-                        </Div>
+                        </Box>
                         <Link href={projects[selectedProject].url} target="_blank">
                             Open project
                         </Link>
-                    </Div>
-                </Div>
+                    </Box>
+                </Box>
             </WindowWrapper>
         </Background>
     );

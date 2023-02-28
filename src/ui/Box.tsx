@@ -7,7 +7,7 @@ type CSSSize = '0' | `${number}px` | `${number}%` | 'fit-content';
 type CSSMargin = '0' | `${number}px` | `${number}%` | 'auto';
 type CSSPadding = '0' | `${number}px` | `${number}%`;
 
-interface DivProps {
+interface BoxProps {
     hidden?: boolean;
     //
     grow?: boolean;
@@ -32,7 +32,7 @@ interface DivProps {
     spacing?: `${number}px`;
 }
 
-export const Div = styled.div<DivProps>`
+export const Box = styled.div<BoxProps>`
     display: ${props => (props.hidden ? 'none' : 'flex')};
     flex-grow: ${props => (props.grow ? 1 : undefined)};
     flex-basis: ${props => (props.grow ? '0%' : undefined)};
@@ -64,7 +64,7 @@ const horizontalSpacing = (spacing: `${number}px`) => `
     }
 `;
 
-const widthToCss = (width: DivProps['width']) => {
+const widthToCss = (width: BoxProps['width']) => {
     if (width === undefined) {
         return undefined;
     }
@@ -79,7 +79,7 @@ const widthToCss = (width: DivProps['width']) => {
     return cssResult;
 };
 
-const heightToCss = (height: DivProps['height']) => {
+const heightToCss = (height: BoxProps['height']) => {
     if (height === undefined) {
         return undefined;
     }

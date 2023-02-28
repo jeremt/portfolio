@@ -78,23 +78,26 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
     const {camera} = useThree();
-    const applyFocus = useCallback(() => {
-        const oldPos = camera.position.clone();
-        const oldQuat = camera.quaternion.clone();
-        camera.position.copy(ref.current.position.clone().setY(6));
-        camera.lookAt(ref.current.position);
-
-        props.onFocus(camera.position, camera.quaternion);
-
-        camera.position.copy(oldPos);
-        camera.quaternion.copy(oldQuat);
-        focus(true);
-    }, []);
     useCursor(hovered);
     useEffect(() => {
-        if (location.hash === '#contact') {
-            applyFocus();
-        }
+        const applyFocus = () => {
+            if (location.hash !== '#contact') {
+                return;
+            }
+            const oldPos = camera.position.clone();
+            const oldQuat = camera.quaternion.clone();
+            camera.position.copy(ref.current.position.clone().setY(6));
+            camera.lookAt(ref.current.position);
+
+            props.onFocus(camera.position, camera.quaternion);
+
+            camera.position.copy(oldPos);
+            camera.quaternion.copy(oldQuat);
+            focus(true);
+        };
+        window.addEventListener('hashchange', applyFocus);
+        applyFocus();
+        return () => window.removeEventListener('hashchange', applyFocus);
     }, []);
     return (
         <group
@@ -106,7 +109,9 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
             scale={0.65}
             onPointerOver={e => (e.stopPropagation(), hover(true))}
             onPointerOut={() => hover(false)}
-            onClick={applyFocus}
+            onClick={() => {
+                location.hash = '#contact';
+            }}
             onPointerMissed={() => focus(false)}
             dispose={null}
         >

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {useCursor, useGLTF} from '@react-three/drei';
 import {useFrame, useThree} from '@react-three/fiber';
 import type {FC} from 'react';
@@ -40,8 +40,28 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
     const {nodes, materials} = useGLTF('/assets/models/macbook.glb') as GLTFResult;
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
-    const pos = camera.position.clone();
-    const quat = camera.quaternion.clone();
+
+    useEffect(() => {
+        const applyFocus = () => {
+            if (location.hash !== '#projects') {
+                return;
+            }
+            const oldPos = camera.position.clone();
+            const oldQuat = camera.quaternion.clone();
+
+            camera.position.copy(group.current.position.clone().setZ(10).setY(8));
+            camera.rotation.copy(group.current.rotation);
+            camera.lookAt(group.current.position.clone().setY(2));
+            onFocus(camera.position, camera.quaternion);
+
+            camera.position.copy(oldPos);
+            camera.quaternion.copy(oldQuat);
+            focus(true);
+        };
+        window.addEventListener('hashchange', applyFocus);
+        applyFocus();
+        return () => window.removeEventListener('hashchange', applyFocus);
+    }, []);
 
     useCursor(hovered);
     return (
@@ -53,17 +73,7 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
             onPointerOver={e => (e.stopPropagation(), hover(true))}
             onPointerOut={() => hover(false)}
             onClick={e => {
-                const oldPos = camera.position.clone();
-                const oldQuat = camera.quaternion.clone();
-
-                camera.position.copy(e.object.position.clone().setZ(10).setY(8));
-                camera.rotation.copy(e.object.rotation);
-                camera.lookAt(e.object.position.clone().setY(2));
-                onFocus(camera.position, camera.quaternion);
-
-                camera.position.copy(oldPos);
-                camera.quaternion.copy(oldQuat);
-                focus(true);
+                location.hash = '#projects';
             }}
             onPointerMissed={e => {
                 onBlur();

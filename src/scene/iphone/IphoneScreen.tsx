@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import {useMemo} from 'react';
-import {Div} from '../../ui/Div';
+import {Box} from '../../ui/Box';
 import {keyframes} from '@emotion/react';
 
 const appear = keyframes`
@@ -13,7 +13,7 @@ const appear = keyframes`
     }
 `;
 
-const Content = styled(Div)`
+const Content = styled(Box)`
     animation: ${appear} 0.3s;
     width: 100px;
     height: 160px;
@@ -54,10 +54,10 @@ export const IphoneScreen = () => {
         <Content align="center" distribute="start">
             {apps.map(app => (
                 <AppLink key={app.name} href={app.url} target="_blank">
-                    <Div align="center" direction="y" width="50px" height="40px">
+                    <Box align="center" direction="y" width="50px" height="40px">
                         <img className="icon" src={app.icon} alt={app.name} />
-                        <Div className="name">{app.name}</Div>
-                    </Div>
+                        <Box className="name">{app.name}</Box>
+                    </Box>
                 </AppLink>
             ))}
         </Content>
