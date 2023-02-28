@@ -1,4 +1,4 @@
-import {Box, Cylinder, MeshReflectorMaterial} from '@react-three/drei';
+import {Box, Cylinder} from '@react-three/drei';
 import {FC} from 'react';
 
 export const Desk: FC = () => {
