@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {useFrame, useThree} from '@react-three/fiber';
 import {easing} from 'maath';
-import {useRef} from 'react';
+import {FC, useCallback, useRef} from 'react';
 
 import {Desk} from './Desk';
 import {Lamp} from './Lamp';
@@ -16,7 +16,7 @@ interface CameraTarget {
     quaternionRatio: number;
 }
 
-export const Room = () => {
+export const Room: FC = () => {
     const ref = useRef(null);
     const {camera} = useThree();
     const target: CameraTarget = {
@@ -26,7 +26,7 @@ export const Room = () => {
         quaternionRatio: 0,
     };
 
-    const resetCamera = () => {
+    const resetCamera = useCallback(() => {
         const oldPos = camera.position.clone();
         const oldQuat = camera.quaternion.clone();
 
@@ -40,11 +40,16 @@ export const Room = () => {
 
         camera.position.copy(oldPos);
         camera.quaternion.copy(oldQuat);
-    };
+        location.hash = '';
+    }, []);
 
     useFrame((state, dt) => {
+        // if (state.camera.position === target.position) {
+        // easing.damp3(state.camera.position, [-1 + (state.pointer.x * state.viewport.width) / 3, (1 + state.pointer.y) / 2, 5.5], 0.5, dt);
+        // } else {
         easing.damp3(state.camera.position, target.position, target.positionRatio, dt);
         easing.dampQ(state.camera.quaternion, target.quaternion, target.quaternionRatio, dt);
+        // }
     });
     return (
         <group ref={ref}>
@@ -55,6 +60,7 @@ export const Room = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
+                    location.hash = 'contact';
                 }}
             />
             <Macbook
@@ -63,6 +69,7 @@ export const Room = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
+                    location.hash = 'projects';
                 }}
                 onBlur={resetCamera}
             />
@@ -72,6 +79,7 @@ export const Room = () => {
                     target.positionRatio = 0.4;
                     target.quaternion.copy(q);
                     target.quaternionRatio = 0.6;
+                    location.hash = 'resume';
                 }}
                 onBlur={resetCamera}
             />

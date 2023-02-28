@@ -4,9 +4,9 @@ import {useCursor, useGLTF} from '@react-three/drei';
 import {useFrame, useThree} from '@react-three/fiber';
 import type {FC} from 'react';
 import type {GLTF} from 'three/examples/jsm/loaders/GLTFLoader';
-
+import styled from '@emotion/styled';
+import {Html} from '@react-three/drei';
 import {MacbookScreen} from './MacbookScreen';
-import {easing} from 'maath';
 
 interface MacbookProps {
     onFocus: (position: THREE.Vector3, quaternion: THREE.Quaternion) => void;
@@ -75,8 +75,10 @@ export const Macbook: FC<JSX.IntrinsicElements['group'] & MacbookProps> = props 
                     <mesh castShadow material={materials.aluminium} geometry={nodes['Cube008'].geometry} />
                     <mesh castShadow material={materials['matte.001']} geometry={nodes['Cube008_1'].geometry} />
                     <mesh castShadow geometry={nodes['Cube008_2'].geometry}>
-                        <MacbookScreen />
-                        {/* {focused ? <MacbookScreen /> : <meshStandardMaterial color="#121212" metalness={0.5} roughness={0} />} */}
+                        <meshStandardMaterial color="#333333" metalness={0.8} />
+                        <Html rotation-x={-Math.PI / 2} position={[0, 0.05, -0.09]} transform occlude>
+                            {focused && <MacbookScreen />}
+                        </Html>
                     </mesh>
                 </group>
             </group>

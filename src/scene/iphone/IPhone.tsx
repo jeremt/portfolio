@@ -6,10 +6,11 @@ source: https://sketchfab.com/3d-models/iphone-13-pro-concept-43bddf623d24406aae
 title: iPhone 13 Pro Concept
 */
 import * as THREE from 'three';
-import {useCursor, useGLTF} from '@react-three/drei';
+import {Html, useCursor, useGLTF} from '@react-three/drei';
 import {GLTF} from 'three-stdlib';
-import {FC, useRef, useState} from 'react';
+import {FC, useCallback, useEffect, useRef, useState} from 'react';
 import {useThree} from '@react-three/fiber';
+import {IphoneScreen} from './IphoneScreen';
 
 type GLTFResult = GLTF & {
     nodes: {
@@ -75,8 +76,26 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
     const ref = useRef<THREE.Group>(null);
     const {nodes, materials} = useGLTF('/assets/models/iphone.glb') as GLTFResult;
     const [hovered, hover] = useState(false);
+    const [focused, focus] = useState(false);
     const {camera} = useThree();
+    const applyFocus = useCallback(() => {
+        const oldPos = camera.position.clone();
+        const oldQuat = camera.quaternion.clone();
+        camera.position.copy(ref.current.position.clone().setY(6));
+        camera.lookAt(ref.current.position);
+
+        props.onFocus(camera.position, camera.quaternion);
+
+        camera.position.copy(oldPos);
+        camera.quaternion.copy(oldQuat);
+        focus(true);
+    }, []);
     useCursor(hovered);
+    useEffect(() => {
+        if (location.hash === '#contact') {
+            applyFocus();
+        }
+    }, []);
     return (
         <group
             ref={ref}
@@ -87,22 +106,16 @@ export const IPhone: FC<JSX.IntrinsicElements['group'] & {onFocus: (p: THREE.Vec
             scale={0.65}
             onPointerOver={e => (e.stopPropagation(), hover(true))}
             onPointerOut={() => hover(false)}
-            onClick={e => {
-                const oldPos = camera.position.clone();
-                const oldQuat = camera.quaternion.clone();
-                camera.position.copy(ref.current.position.clone().setY(6));
-                camera.lookAt(ref.current.position);
-
-                props.onFocus(camera.position, camera.quaternion);
-
-                camera.position.copy(oldPos);
-                camera.quaternion.copy(oldQuat);
-            }}
+            onClick={applyFocus}
+            onPointerMissed={() => focus(false)}
             dispose={null}
         >
             <group>
                 <mesh castShadow receiveShadow geometry={nodes.BackCover_Blue_0.geometry} material={materials.Blue} />
                 <mesh castShadow receiveShadow geometry={nodes.Screen_Screen_0.geometry} material={materials.Screen} />
+                <Html onClick={e => e.stopPropagation()} position={[0, 0.2, 0]} rotation={[Math.PI / 2, Math.PI, 0]} transform occlude>
+                    {focused && <IphoneScreen />}
+                </Html>
                 <mesh castShadow receiveShadow geometry={nodes.CameraModuleBlack_BlackGlossy_0.geometry} material={materials.BlackGlossy} />
                 <mesh castShadow receiveShadow geometry={nodes.CameraModuleBlack_SpeakerAndMiic_0.geometry} material={materials.SpeakerAndMiic} />
                 <mesh castShadow receiveShadow geometry={nodes.Bezel_BezelAndNotch_0.geometry} material={materials.BezelAndNotch} />

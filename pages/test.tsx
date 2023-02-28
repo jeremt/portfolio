@@ -6,7 +6,8 @@ import type {GetStaticProps} from 'next';
 import {getWorld} from '../src/api/api';
 import type {WorldModel} from '../src/api/WorldModel';
 import {Scene} from '../src/scene/Scene';
-import {MacbookWindow} from '../src/scene/macbook/MacbookWindow';
+import {MacbookScreen} from '../src/scene/macbook/MacbookScreen';
+import {IphoneScreen} from '../src/scene/iphone/IphoneScreen';
 
 type IndexProps = {
     world: WorldModel;
@@ -22,7 +23,8 @@ export default function TestPage({world}: IndexProps) {
             <Head>
                 <title>Test</title>
             </Head>
-            <MacbookWindow />
+            {/* <MacbookWindow /> */}
+            <IphoneScreen />
         </>
     );
 }
