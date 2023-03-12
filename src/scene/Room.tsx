@@ -3,8 +3,8 @@ import {useFrame, useThree} from '@react-three/fiber';
 import {easing} from 'maath';
 import {FC, Suspense, useCallback, useEffect, useRef} from 'react';
 
-import {Desk} from './Desk';
 import {Lamp} from './Lamp';
+import {Desk} from './Model';
 import {Resume} from './Resume';
 import {Macbook} from './macbook/Macbook';
 import {IPhone} from './iphone/IPhone';
@@ -32,6 +32,7 @@ export const Room: FC = () => {
 
     useEffect(() => {
         const applyFocus = () => {
+            console.log('IN');
             const oldPos = camera.position.clone();
             const oldQuat = camera.quaternion.clone();
             switch (location.hash) {
@@ -95,7 +96,7 @@ export const Room: FC = () => {
                     </Text3D>
                 </Center>
             </Suspense>
-            <Lamp />
+            {/* <Lamp /> */}
             <IPhone ref={iphoneRef} />
             <Macbook ref={macbookRef} />
             <Resume ref={resumeRef} />

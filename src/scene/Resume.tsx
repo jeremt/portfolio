@@ -1,4 +1,4 @@
-import {Center, Html, Plane, Text3D, useCursor} from '@react-three/drei';
+import {Center, Html, Plane, Text3D, useCursor, useTexture} from '@react-three/drei';
 import {useThree} from '@react-three/fiber';
 import Image from 'next/image';
 import {forwardRef, useEffect, useRef, useState} from 'react';
@@ -27,6 +27,7 @@ const AppearImage = styled(Image)`
 export const Resume = forwardRef<THREE.Group>((_, ref) => {
     const [hovered, hover] = useState(false);
     const [focused, focus] = useState(false);
+    const map = useTexture('/assets/images/resume.jpg');
     useCursor(hovered);
     useEffect(() => {
         if (location.hash === '#resume') {
@@ -41,6 +42,7 @@ export const Resume = forwardRef<THREE.Group>((_, ref) => {
                 </Text3D>
             </Center>
             <Plane
+                position-y={0.1}
                 name="resume"
                 args={[595 * 2, 842 * 2]}
                 scale={0.003}
@@ -58,7 +60,7 @@ export const Resume = forwardRef<THREE.Group>((_, ref) => {
                 <Html transform position={[0, 0, 0]} scale={80}>
                     {focused && <AppearImage src="/assets/images/resume.jpg" priority alt="Resume" width={595} height={842} />}
                 </Html>
-                <meshStandardMaterial />
+                <meshStandardMaterial map={map} />
             </Plane>
         </group>
     );

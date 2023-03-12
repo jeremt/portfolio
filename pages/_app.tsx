@@ -31,7 +31,8 @@ export default function App({Component, pageProps}: AppProps) {
                         color: #222222;
                         box-sizing: border-box;
                         font-family: 'Inter', sans-serif;
-                        background: linear-gradient(#1f202f, #2b3845);
+                        /* background: linear-gradient(#b5c3ce, #e3fcfe); */
+                        background: linear-gradient(#121214, #27272e);
                     }
                 `}
             />

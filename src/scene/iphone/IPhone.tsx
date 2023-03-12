@@ -112,7 +112,7 @@ export const IPhone = forwardRef<THREE.Group>((props, ref) => {
             )}
             <group>
                 <mesh castShadow receiveShadow geometry={nodes.BackCover_Blue_0.geometry} material={materials.Blue} />
-                <mesh castShadow receiveShadow geometry={nodes.Screen_Screen_0.geometry} material={materials.Screen} />
+                <mesh castShadow receiveShadow geometry={nodes.Screen_Screen_0.geometry} material={focused ? materials.Screen : materials.BezelAndNotch} />
                 <Html onClick={e => e.stopPropagation()} position={[0, 0.2, 0]} rotation={[Math.PI / 2, Math.PI, 0]} transform occlude>
                     {focused && <IphoneScreen />}
                 </Html>
