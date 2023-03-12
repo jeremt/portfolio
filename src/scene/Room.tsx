@@ -4,11 +4,11 @@ import {easing} from 'maath';
 import {FC, Suspense, useCallback, useEffect, useRef} from 'react';
 
 import {Lamp} from './Lamp';
-import {Desk} from './Model';
+import {Desk} from './Desk';
 import {Resume} from './Resume';
 import {Macbook} from './macbook/Macbook';
 import {IPhone} from './iphone/IPhone';
-import {Center, Float, Text3D} from '@react-three/drei';
+import {Center, Float, Html, Text3D, useProgress} from '@react-three/drei';
 
 interface CameraTarget {
     position: THREE.Vector3;
@@ -18,6 +18,7 @@ interface CameraTarget {
 }
 
 export const Room: FC = () => {
+    const {progress} = useProgress();
     const roomRef = useRef<THREE.Group>(null);
     const macbookRef = useRef<THREE.Group>(null);
     const iphoneRef = useRef<THREE.Group>(null);
@@ -82,25 +83,23 @@ export const Room: FC = () => {
     });
     return (
         <group ref={roomRef}>
-            <Suspense fallback={null}>
-                <Center position-y={15}>
-                    <Text3D font="/assets/fonts/oswald_bold.json" scale={2}>
-                        HI, I'M JÉRÉMIE!
-                        <meshStandardMaterial color="#eeeeee" metalness={0.8} roughness={0.5} />
-                    </Text3D>
-                </Center>
-                <Center position-y={12}>
-                    <Text3D font="/assets/fonts/oswald_regular.json" scale={1.2}>
-                        (CLICK ANYWHERE TO EXPLORE)
-                        <meshStandardMaterial color="#777777" metalness={0.5} roughness={0.5} />
-                    </Text3D>
-                </Center>
-            </Suspense>
-            {/* <Lamp /> */}
+            <Center position-y={15}>
+                <Text3D font="/assets/fonts/oswald_bold.json" scale={2}>
+                    HI, I'M JÉRÉMIE!
+                    <meshStandardMaterial color="#eeeeee" metalness={0.8} roughness={0.5} />
+                </Text3D>
+            </Center>
+            <Center position-y={12}>
+                <Text3D font="/assets/fonts/oswald_regular.json" scale={1.2}>
+                    (CLICK ANYWHERE TO EXPLORE)
+                    <meshStandardMaterial color="#777777" metalness={0.5} roughness={0.5} />
+                </Text3D>
+            </Center>
             <IPhone ref={iphoneRef} />
             <Macbook ref={macbookRef} />
             <Resume ref={resumeRef} />
             <Desk />
+            {/* <Lamp /> */}
         </group>
     );
 };
