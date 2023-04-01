@@ -38,20 +38,19 @@ export const App: FC = () => {
     }, []);
     return (
         <>
-            <Canvas shadows camera={{position: [0, 12, 15], fov: 35}}>
+            <Canvas shadows camera={{position: [0, 14, 12], fov: 35}}>
                 <pointLight position={[10, 10, 10]} />
                 <directionalLight castShadow intensity={0.3} position={[3, 8, 6]} shadow-mapSize={[1024, 1024]}>
                     <orthographicCamera attach="shadow-camera" left={-20} right={20} top={20} bottom={-20} />
                 </directionalLight>
-                {/* <OrbitControls /> */}
-                <Pawn skin="bear" x={position[0]} y={position[1]} range={selectedCard?.range} />
-                <Pawn skin="duck" x={position2[0]} y={position2[1]} />
-                <Board />
+                <OrbitControls />
+                <group position-z={-2}>
+                    <Pawn skin="bear" x={position[0]} y={position[1]} range={selectedCard?.range} />
+                    <Pawn skin="duck" x={position2[0]} y={position2[1]} />
+                    <Board />
+                </group>
             </Canvas>
             <Hand selectedCard={selectedCard} onSelect={setSelectedCard} cards={cards} />
-            {/* {hand.map((card, i) => {
-                return <Card key={i} card={card} index={i} />;
-            })} */}
         </>
     );
 };

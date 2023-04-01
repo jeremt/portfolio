@@ -11,7 +11,7 @@ interface HandProps {
 
 const Container = styled(Div)`
     position: absolute;
-    bottom: 0;
+    bottom: 100px;
 `;
 
 const Card = styled.div<{selected: boolean; card: CardModel}>`
@@ -25,14 +25,14 @@ const Card = styled.div<{selected: boolean; card: CardModel}>`
     background-size: 100% 100%;
     transform: ${props =>
         props.selected
-            ? 'scale(1.4) translateY(-40px)'
-            : `rotate(${props.card.index * 10 - 25}deg) scale(1.2) translateY(${Math.abs(props.card.index * 30 - 60) + 20}px)`};
-    transition: transform 0.3s;
+            ? 'scale(1.4) translateY(40px)'
+            : `rotate(${props.card.index * 10 - 25}deg) scale(1.2) translateY(${Math.abs(props.card.index * 30 - 60) + 120}px)`};
+    transition: transform 0.3s ease-in-out;
     &:hover {
         transform: ${props =>
             props.selected
-                ? 'scale(1.4) translateY(-40px)'
-                : `rotate(${props.card.index * 10 - 25}deg) scale(1.3) translateY(${Math.abs(props.card.index * 30 - 60) + 20}px)`};
+                ? 'scale(1.4) translateY(40px)'
+                : `rotate(${props.card.index * 10 - 25}deg) scale(1.3) translateY(${Math.abs(props.card.index * 30 - 60) + 100}px)`};
         z-index: 2;
     }
 `;
@@ -45,7 +45,7 @@ export const Hand: FC<HandProps> = ({selectedCard, onSelect, cards}) => {
                     key={card.index}
                     selected={selectedCard ? card.index === selectedCard.index : false}
                     card={card}
-                    onClick={() => onSelect(card.index === selectedCard?.index ? undefined : card)}
+                    onPointerDown={() => onSelect(card.index === selectedCard?.index ? undefined : card)}
                 />
             ))}
         </Container>
