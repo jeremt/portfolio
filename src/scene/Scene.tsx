@@ -47,9 +47,15 @@ export const Scene: FC<JSX.IntrinsicElements['group']> = props => {
                 <Laptop position-x={offset * 3} position-y={1} map={maps[2]} />;
                 <Laptop position-x={offset * 4} position-y={1} map={maps[3]} />;
                 <group position-x={offset * 5}>
-                    <ContactLink position-x={-2} name="Github" link="https://github.com/jeremt" icon={<Computer />} />
-                    <ContactLink position-z={0.5} name="Linked In" link="https://www.linkedin.com/in/jeremie-taboada-16495959/" icon={<Briefcase />} />
-                    <ContactLink position-x={2} position-z={1} name="Instagram" link="https://instagram.com/jeremtab" icon={<Camera />} />
+                    <ContactLink rotation-y={-0.1} position-x={-2} name="Github" link="https://github.com/jeremt" icon={<Computer />} />
+                    <ContactLink
+                        rotation-y={-0.5}
+                        position-z={0.4}
+                        name="Linked In"
+                        link="https://www.linkedin.com/in/jeremie-taboada-16495959/"
+                        icon={<Briefcase />}
+                    />
+                    <ContactLink rotation-y={-1} position-x={1.3} position-z={1.8} name="Instagram" link="https://instagram.com/jeremtab" icon={<Camera />} />
                 </group>
             </group>
         </group>

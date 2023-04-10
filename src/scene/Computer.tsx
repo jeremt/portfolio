@@ -27,7 +27,7 @@ export const Computer = (props: JSX.IntrinsicElements['group']) => {
     const gold = new THREE.MeshStandardMaterial({color: '#daceaa', roughness: 0.15, metalness: 0.8});
     return (
         <group {...props} dispose={null}>
-            <group scale={0.008}>
+            <group scale={0.008} position-y={-0.1}>
                 <mesh castShadow receiveShadow geometry={nodes.Cube.geometry} material={gold} position={[0.77, -47.69, 1.72]} />
                 <mesh castShadow receiveShadow geometry={nodes.Rectangle_6.geometry} material={gold} position={[9.25, 16.69, -2.25]} scale={[1, 0.91, 1]} />
                 <mesh castShadow receiveShadow geometry={nodes.Rectangle_5.geometry} material={gold} position={[-32.51, 16.69, -2.25]} scale={[1, 0.91, 1]} />

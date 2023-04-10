@@ -7,13 +7,13 @@ export const ContactLink: FC<JSX.IntrinsicElements['group'] & {name: string; lin
     const [hovered, hover] = useState(false);
     const iconRef = useRef<THREE.Group>(null);
     useFrame(() => {
-        iconRef.current!.position.y = THREE.MathUtils.lerp(iconRef.current!.position.y, hovered ? 0.5 : 0.2, 0.1);
+        iconRef.current!.position.y = THREE.MathUtils.lerp(iconRef.current!.position.y, hovered ? 0.35 : 0.25, 0.1);
     });
     useCursor(hovered);
     return (
         <group {...props} onPointerEnter={() => hover(true)} onPointerLeave={() => hover(false)} onClick={() => window.open(link)}>
             <RoundedBox castShadow position-y={-0.75} args={[1, 0.5, 1]} radius={0.05}>
-                <meshStandardMaterial color="#333333" />
+                <meshStandardMaterial color={hovered ? '#3a3a3a' : '#333333'} />
             </RoundedBox>
             <group ref={iconRef}>{icon}</group>
             <Text
