@@ -1,56 +1,163 @@
 import {Canvas} from '@react-three/fiber';
-import {useEffect, useMemo, useState} from 'react';
-import {Html, OrbitControls} from '@react-three/drei';
+import {ContactShadows, Environment, OrbitControls, Scroll, ScrollControls} from '@react-three/drei';
 import type {FC} from 'react';
-
-import {Pawn} from './scene/Pawn';
-import {Board} from './scene/Board';
-import type {CardModel} from './data/CardModel';
 import './App.css';
-import {Hand} from './ui/Hand';
+import {Laptop} from './scene/Laptop';
+import {Div} from './ui/Div';
+import styled from '@emotion/styled';
+import {Scene} from './scene/Scene';
+import {EffectComposer, DepthOfField} from '@react-three/postprocessing';
 
-export const App: FC = () => {
-    const [position, setPosition] = useState<[number, number]>([7, 7]);
-    const [position2, setPosition2] = useState<[number, number]>([3, 4]);
-    const [selectedCard, setSelectedCard] = useState<CardModel>();
-    const cards = useMemo<CardModel[]>(
-        () => [
-            {index: 0, url: '/images/cards/1pas.png', range: {type: 'diamond', min: 1, max: 1, color: '#FFEAAB'}},
-            {index: 1, url: '/images/cards/2pas.png', range: {type: 'diamond', min: 1, max: 2, color: '#FFEAAB'}},
-            {index: 2, url: '/images/cards/2pas.png', range: {type: 'diamond', min: 1, max: 2, color: '#FFEAAB'}},
-            {index: 3, url: '/images/cards/marteau-en-bois.png', range: {type: 'square', min: 1, max: 2, color: '#e3b798'}},
-            {index: 4, url: '/images/cards/arc-en-bois.png', range: {type: 'diamond', min: 3, max: 5, color: '#e3b798'}},
-        ],
-        [],
-    );
+const Container = styled(Scroll)`
+    /* width: 100%; */
+`;
 
-    useEffect(() => {
-        document.addEventListener('keypress', (e: KeyboardEvent) => {
-            if (e.key === 'w') setPosition(p => [p[0], p[1] - 1]);
-            if (e.key === 's') setPosition(p => [p[0], p[1] + 1]);
-            if (e.key === 'a') setPosition(p => [p[0] - 1, p[1]]);
-            if (e.key === 'd') setPosition(p => [p[0] + 1, p[1]]);
-            if (e.key === 'i') setPosition2(p => [p[0], p[1] - 1]);
-            if (e.key === 'k') setPosition2(p => [p[0], p[1] + 1]);
-            if (e.key === 'j') setPosition2(p => [p[0] - 1, p[1]]);
-            if (e.key === 'l') setPosition2(p => [p[0] + 1, p[1]]);
-        });
-    }, []);
+// https://www.youtube.com/watch?v=52sTNIJs78A
+
+const Page = styled.section<{index: number}>`
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 20px 50px 20px;
+    left: ${props => props.index * 100}vw;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+
+    h1 {
+        margin: 0;
+        color: white;
+        font-size: 2rem;
+        user-select: none;
+    }
+    h2 {
+        margin: 0;
+        font-size: 2rem;
+        color: white;
+        font-weight: bold;
+    }
+    h2 > a {
+        color: white;
+        text-decoration: none;
+        &:hover {
+            color: #fcd37d;
+            border-bottom: 2px solid #fcd37d;
+        }
+        user-select: none;
+    }
+    p {
+        margin: 10px 0;
+        color: #aaaaaa;
+        line-height: 26px;
+        text-align: center;
+        user-select: none;
+        max-width: 600px;
+        font-family: Menlo, sans-serif;
+        font-size: 0.8rem;
+    }
+    .btn {
+        color: #fcd37d;
+        text-decoration: none;
+        border: 2px solid #fcd37d;
+        padding: 10px 15px;
+        font-family: Inter, sans-serif;
+        font-size: 0.6rem;
+        font-weight: bold;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        transition: 0.3s background-color;
+        &:hover {
+            color: #222222;
+            background-color: #fcd37d;
+        }
+    }
+`;
+
+const Content = () => {
     return (
         <>
-            <Canvas shadows camera={{position: [0, 14, 12], fov: 35}}>
-                <pointLight position={[10, 10, 10]} />
-                <directionalLight castShadow intensity={0.3} position={[3, 8, 6]} shadow-mapSize={[1024, 1024]}>
-                    <orthographicCamera attach="shadow-camera" left={-20} right={20} top={20} bottom={-20} />
-                </directionalLight>
-                <OrbitControls />
-                <group position-z={-2}>
-                    <Pawn skin="bear" x={position[0]} y={position[1]} range={selectedCard?.range} />
-                    <Pawn skin="duck" x={position2[0]} y={position2[1]} />
-                    <Board />
-                </group>
+            <Page index={0}>
+                <h1>I'm Jérémie 👋</h1>
+                <p>
+                    I’m french developer from Paris.
+                    <br />
+                    I like new projects, making experiments, games & learning new stuff!
+                    <br />
+                    Scroll for more 👉
+                </p>
+                <a className="btn" target="_blank" href="/resume.pdf">
+                    Download resume
+                </a>
+            </Page>
+            <Page index={1}>
+                <h2>
+                    <a target="_blank" href="https://voltapp.tech">
+                        ⚡️ Voltapp
+                    </a>
+                </h2>
+                <p>
+                    Voltapp is a tool that allows people to create apps and websites without coding. I’m a co-founder of the company, mostly working on the
+                    design & UX of the project as well as some engine core features and R&D development.
+                </p>
+                <a className="btn" target="_blank" href="https://voltapp.tech">
+                    Open project
+                </a>
+            </Page>
+            <Page index={2}>
+                <h2>
+                    <a target="_blank" href="https://js-journey.vercel.app/">
+                        🌲 JS Journey
+                    </a>
+                </h2>
+                <p>
+                    JS Journey is a side project I’m making on my free time. This is a website to learn programming via Javascript from scratch. The idea is to
+                    make a fun and progressive way to learn various concepts and best practices!
+                </p>
+                <a className="btn" target="_blank" href="https://js-journey.vercel.app/">
+                    Open project
+                </a>
+            </Page>
+            <Page index={3}>
+                <h2>🐸 Frog</h2>
+                <p>
+                    Frog is a 2d platforming multiplayer game. We are currently developing the game using Godot game engine with 2 friends. One is in charge of
+                    the pixel art, while I work on gameplay and other features with the other.
+                </p>
+            </Page>
+            <Page index={4}>
+                <h2>🥊 Bastoon</h2>
+                <p>
+                    Bastoon is a cards game from 2 to 4 players. Players are placed on a board and some cards are constrained by there range and the players
+                    positions. I made only a few prototypes for now, but you can download the printable version with the link below!
+                </p>
+                <a className="btn" href="/bastoon.zip">
+                    Download files
+                </a>
+            </Page>
+        </>
+    );
+};
+
+export const App: FC = () => {
+    return (
+        <>
+            <Canvas shadows camera={{aspect: 5}}>
+                <ambientLight intensity={0.5} />
+                <fog attach="fog" args={['#1B1C20', 5, 20]} />
+                <ScrollControls pages={6} horizontal>
+                    <Scene />
+                    <Container html>
+                        <Content />
+                    </Container>
+                </ScrollControls>
+                {/* <OrbitControls /> */}
+                {/* <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} /> */}
+                <ContactShadows position={[0, -1, 0]} color="#222222" scale={50} blur={1} far={10} />
+                <Environment preset="city" />
             </Canvas>
-            <Hand selectedCard={selectedCard} onSelect={setSelectedCard} cards={cards} />
         </>
     );
 };

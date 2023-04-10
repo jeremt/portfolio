@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
 html, body, #root {
     display: flex;
     width: 100%;
@@ -8,6 +10,10 @@ html, body, #root {
     overscroll-behavior-y: none;
 }
 
+body {
+    overflow: hidden;
+}
+
 #root {
-    background-image: linear-gradient(#6d7376, #3a3c47);
+    background-image: linear-gradient(#17181e, #222426);
 }
