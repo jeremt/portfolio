@@ -1,5 +1,5 @@
 import {Canvas} from '@react-three/fiber';
-import {ContactShadows, Environment, OrbitControls, Scroll, ScrollControls} from '@react-three/drei';
+import {ContactShadows, Environment, Html, OrbitControls, Scroll, ScrollControls} from '@react-three/drei';
 import type {FC} from 'react';
 import './App.css';
 import {Laptop} from './scene/Laptop';
@@ -18,6 +18,7 @@ const Page = styled.section<{index: number}>`
     position: absolute;
     display: flex;
     width: 100vw;
+    height: 100dvh;
     height: 100vh;
     justify-content: flex-end;
     align-items: center;
@@ -68,10 +69,14 @@ const Page = styled.section<{index: number}>`
         font-weight: bold;
         letter-spacing: 5px;
         text-transform: uppercase;
-        transition: 0.3s background-color;
+        transition: 0.3s all;
         &:hover {
             color: #222222;
             background-color: #fcd37d;
+            letter-spacing: 6px;
+        }
+        &:active {
+            letter-spacing: 5px;
         }
     }
 `;
@@ -94,7 +99,7 @@ const Content = () => {
             </Page>
             <Page index={1}>
                 <h2>
-                    <a target="_blank" href="https://voltapp.tech">
+                    <a href="https://voltapp.tech" rel="noreferer" target="_blank">
                         ⚡️ Voltapp
                     </a>
                 </h2>
@@ -102,13 +107,13 @@ const Content = () => {
                     Voltapp is a tool that allows people to create apps and websites without coding. I’m a co-founder of the company, mostly working on the
                     design & UX of the project as well as some engine core features and R&D development.
                 </p>
-                <a className="btn" target="_blank" href="https://voltapp.tech">
+                <a className="btn" href="https://voltapp.tech" rel="noreferer" target="_blank">
                     Open project
                 </a>
             </Page>
             <Page index={2}>
                 <h2>
-                    <a target="_blank" href="https://js-journey.vercel.app/">
+                    <a href="https://js-journey.vercel.app/" rel="noreferer" target="_blank">
                         🌲 JS Journey
                     </a>
                 </h2>
@@ -116,7 +121,7 @@ const Content = () => {
                     JS Journey is a side project I’m making on my free time. This is a website to learn programming via Javascript from scratch. The idea is to
                     make a fun and progressive way to learn various concepts and best practices!
                 </p>
-                <a className="btn" target="_blank" href="https://js-journey.vercel.app/">
+                <a className="btn" href="https://js-journey.vercel.app/" rel="noreferer" target="_blank">
                     Open project
                 </a>
             </Page>
@@ -137,6 +142,16 @@ const Content = () => {
                     Download files
                 </a>
             </Page>
+            <Page index={5}>
+                <h2>💼 Portfolio</h2>
+                <p>
+                    I created this portfolio to teach students how to use ThreeJS and bring some 3D to the web. Feel free to download and re-use the code to
+                    create your own.
+                </p>
+                <a className="btn" href="https://github.com/jeremt/portfolio" rel="noreferer" target="_blank">
+                    Get the code
+                </a>
+            </Page>
         </>
     );
 };
@@ -147,11 +162,11 @@ export const App: FC = () => {
             <Canvas shadows camera={{aspect: 5}}>
                 <ambientLight intensity={0.5} />
                 <fog attach="fog" args={['#1B1C20', 5, 20]} />
-                <ScrollControls pages={6} horizontal>
+                <ScrollControls pages={7} horizontal>
                     <Scene />
-                    <Container html>
+                    <Scroll html>
                         <Content />
-                    </Container>
+                    </Scroll>
                 </ScrollControls>
                 {/* <OrbitControls /> */}
                 {/* <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2.2} maxPolarAngle={Math.PI / 2.2} /> */}
